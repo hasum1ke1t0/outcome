@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('course', 50);
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('create_year');
+            $table->string('image', 100)->nullable();
+            $table->string('body', 300)->nullable();
 
         });
     }
