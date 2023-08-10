@@ -13,6 +13,9 @@ class Item extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function deal(){
+        return $this->hasone(Deal::class);
+    }
     protected $fillable = [
     'name',
     'course',
@@ -31,3 +34,6 @@ class Item extends Model
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
 }
+
+// hasone→外部キーを渡す方
+// belongsto→外部キーを持っている方

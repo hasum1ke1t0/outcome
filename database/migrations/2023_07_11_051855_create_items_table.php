@@ -20,8 +20,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('create_year');
-            $table->string('image', 100)->nullable();
+            $table->string('image')->nullable;
             $table->string('body', 300)->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('show')->default(1);
 
         });
     }

@@ -5,8 +5,9 @@
         <title>Textbook_deal</title>
     </head>
     <body>
+        <x-app-layout>
         <h1>出品画面</h1>
-        <form action="/items" method="POST">
+        <form action="/items" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="title">
                 <h2>教科書名</h2>
@@ -24,8 +25,8 @@
                 <p class="create_year__error" style="color:red">{{ $errors->first('item.create_year') }}</p>
             </div>
             <div class = "image">
-                <h2>画像URL</h2>
-                <textarea name="item[image]" placeholder="画像URL"></textarea>
+                <h2>教科書画像</h2>
+                <input type="file" name="image">
             </div>
             <div class="body">
                 <h2>詳細</h2>
@@ -35,5 +36,6 @@
             <input type="submit" value="保存"/>
         </form>
         <div class="back">[<a href="/">back</a>]</div>
+        </x-app-layout>
     </body>
 </html>
