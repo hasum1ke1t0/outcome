@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
             $table->string('course', 50);
             $table->timestamps();
             $table->softDeletes();
             $table->integer('create_year');
-            $table->string('image', 100)->nullable();
+            $table->string('image')->nullable;
             $table->string('body', 300)->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('show')->default(1);
 
         });
     }
