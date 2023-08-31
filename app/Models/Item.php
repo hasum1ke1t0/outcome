@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class Item extends Model
 {
@@ -23,15 +24,22 @@ class Item extends Model
     'body',
     ];
     
-    public function getByLimit(int $limit_count = 10)
-{
-    // updated_atで降順に並べたあと、limitで件数制限をかける
-    return $this->orderBy('updated_at', 'DESC')->limit($limit_count)->get();
-}
-    public function getPaginateByLimit(int $limit_count = 2)
+    public function getPaginateByLimit(int $limit_count = 9)
     {
         // updated_atで降順に並べたあと、limitで件数制限をかける
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
+    public function getPaginateByLimit2(int $limit_count = 9)
+    {
+        // updated_atで降順に並べたあと、limitで件数制限をかける
+        return $this->whereHas('user', function ($q) {
+     $q->where('school', "=", Auth::user()->school);})->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    public function getPaginateByLimit3(int $limit_count = 9)
+    {
+        // updated_atで降順に並べたあと、limitで件数制限をかける
+        return $this->user()->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
 }
 

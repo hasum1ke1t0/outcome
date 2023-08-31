@@ -14,6 +14,10 @@ class ItemController extends Controller
 {
     return view('items.index')->with(['items' => $item->getPaginateByLimit()]);
 }
+    public function mypage(Item $item)
+            {
+                return view('items.mypage')->with(['items' => Auth::user()->getPaginateByLimit()]);
+            }
     public function show(Item $item)
     {
         return view('items.show')->with(['item' => $item]);
@@ -22,6 +26,15 @@ class ItemController extends Controller
     public function create()
     {
         return view('items.create');
+    }
+    public function school(Item $item)
+        {
+            return view('items.school')->with(['items' => $item->getPaginateByLimit2()]);
+        }
+    
+    public function search()
+    {
+        return view('items.search');
     }
     public function store(ItemRequest $request, Item $item)
     {
@@ -39,10 +52,8 @@ class ItemController extends Controller
     }
     public function update(ItemRequest $request, Item $item)
     {
-        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
         
         $item->fill($request->item);
-        $item->image = $image_url;
         $item->user_id = Auth::id();
         $item->save();
         return redirect('/items/' . $item->id);
