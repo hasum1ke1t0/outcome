@@ -26,8 +26,11 @@ Route::get('/dashboard', function () {
 
 Route::controller(ItemController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
+    Route::get('/mypage', 'mypage')->name('mypage');
     Route::post('/items', 'store')->name('store');
     Route::get('/items/create', 'create')->name('create');
+    Route::get('/items/search', 'search')->name('search');
+    Route::get('/items/school', 'school')->name('school');
     Route::get('/items/{item}', 'show')->name('show');
     Route::put('/items/{item}', 'update')->name('update');
     Route::delete('/items/{item}', 'delete')->name('delete');
@@ -37,8 +40,10 @@ Route::controller(ItemController::class)->middleware(['auth'])->group(function()
 Route::controller(DealController::class)->middleware(['auth'])->group(function(){
     Route::get('/deals', 'index')->name('index2');
     Route::post('/deals/{item}','store')->name('store2');
-    Route::delete('/deals/{item}', 'delete')->name('delete2');
+    Route::delete('/deals/{deal}/', 'delete')->name('delete2');
     Route::get('/deals/{deal}', 'show')->name('show2');
+    Route::get('deals/{deal}/messages','index2')->name('index3');
+    Route::post('deals/{deal}/messages','store2')->name('store3');
     
 });
 

@@ -13,14 +13,18 @@ class Deal extends Model
     use SoftDeletes;
     
     public function item(){
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class)->withTrashed();
     }
     
     public function user(){
         return $this->belongsTo(User::class);
     }
     
-    public function getPaginateByLimit(int $limit_count = 2)
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
+    
+    public function getPaginateByLimit(int $limit_count = 9)
     {
         // updated_atで降順に並べたあと、limitで件数制限をかける
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);

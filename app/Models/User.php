@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Auth;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -24,6 +24,12 @@ class User extends Authenticatable
     
     public function deals(){
         return $this->hasMany(Deal::class);  
+    }
+    
+    public function getPaginateByLimit(int $limit_count = 1)
+    {
+        // updated_atで降順に並べたあと、limitで件数制限をかける
+        return $this->items()->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
     protected $fillable = [
         'name',
